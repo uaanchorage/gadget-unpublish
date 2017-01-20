@@ -4,7 +4,7 @@
     <!-- The title that appears in the gadget's title bar. -->
     <entry key="title" label="Title">Unpublish File</entry>
     
-    <!-- The URL of an icon image. -->
+    <!-- The URL of an icon image or a class name of a system icon (http://a.cmsrc.omniupdate.com/resources/icomoon/). -->
     <entry key="icon" private="true">icon-remove-5</entry>
     
     <!-- The description that appears in the gadget chooser. -->
