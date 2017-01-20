@@ -11,7 +11,7 @@
     <entry key="description" private="true">Unpublishes files from the production server.</entry>
     
     <!-- The URL of a thumbnail image to appear in the gadget chooser. -->
-    <entry key="thumbnail" private="true">http://jessgusclark.github.io/gadget-unpublished/unpublished-thumbnail.jpg</entry>
+    <entry key="thumbnail" private="true">https://raw.githubusercontent.com/uaanchorage/gadget-unpublish/master/thumbnail.jpg</entry>
     
     <!-- Current supported types are "dashboard" and "sidebar". If you want your gadget to appear
          in both places, enter "dashboard, sidebar". -->
