@@ -7,63 +7,46 @@
 		<!-- Use Bootstrap to match the look of OU Campus. -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-		<style type="text/css">
-			body {
-				margin: 20px 10px;
-				background-color: transparent;
-			}
-			#prompt {
-				position: fixed;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				padding: 10px 0;
-				background-color: rgba(0,0,0,0.9);
-				color: white;
-				text-align: center;
-			}
-			#prompt > p { font-size: 0.9em; }
-
-			.alert {
-				margin-top:-14px;
-				padding:5px 15px;
-			}
-		</style>
+		<link rel="stylesheet" href="css/app.css" />
 
 		<!-- jQuery IS REQUIRED for gadgetlib.js to work. -->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 
-		<!-- 
-gadgetlib.js is a library of basic functions that gadgets can use. It creates a global
-`gadget` object that has a few useful methods. (See comments in gadgetlib.js.)
--->
-		<script type="text/javascript" src="lib/gadgetlib.js"></script>
+		<!-- gadgetlib.js is a library of basic functions that gadgets can use. -->
+    	<script type="text/javascript" src="js/gadgetlib.js"></script>		
+	</head>
+	<body>
+		<div id="main">
+			<a id="unpublish" role="button" class="btn btn-danger" style="width:100%">Unpublish</a>
+			<div id="prompt" class="hidden">
+				<p>Are you sure?</p>
+				<button type="button" id="cancel" class="btn btn-default btn-sm">Cancel</button>
+				<button type="button" id="confirm" class="btn btn-danger btn-sm">Yes, Unpublish</button>
+			</div>
+			<div id="response" class="hidden">
+				<div class="alert alert-success">
+				    <strong>Success!</strong> The file has been unpublished.
+				</div>
+			</div>
+		</div>
+
+		<!--
+			The following hidden div is only needed if you'll be editing your gadget in
+			OU Campus's source code editor. OU Campus automatically adds a DirectEdit link
+			to HTML files that you edit in OU Campus. This div hides the DirectEdit link.
+		-->
+		<div style="display:none">
+			<!-- ouc:ob --><!-- /ouc:ob -->
+		</div>
 
 		<script type="text/javascript">
-
 			$(document).ready(function () {
-				/* 
-                First, call `gadget.ready()` to make sure the gadget has obtained an API token
-                to use for making OU Campus API calls. If your gadget will not make any API calls,
-                you can dispense with this method. This asynchronous method returns a jQuery
-                Promise object.
-
-                Then, call `gadget.fetch()` to get the gadget's config data from the system. This
-                method, which also returns a jQuery Promise object, uses the API, which is why it
-                needs to follow the call to `gadget.ready()`.
-
-                If you don't need the config data, you don't need to call gadget.fetch().
-            */
-
-            	var currentPage;
+				var currentPage;
 
 				gadget.ready().then(gadget.fetch).then(function () {
-
 					var apihost = gadget.get('apihost');
 					var token = gadget.get('token');
-					var site = gadget.get('site');
-					
+					var site = gadget.get('site');					
 					
 					$("#unpublish").click(function(){
 						// make them confirm they want to unpublish
@@ -88,19 +71,17 @@ gadgetlib.js is a library of basic functions that gadgets can use. It creates a 
 								dataType: "json",
 								url: apihost + "/files/info",
 								data: fileInfo,
-								success: DeleteFile
-								
+								success: DeleteFile								
 							});
 						})
-					});
+					});					
 					
-					
-					function DeleteFile(data){
+					function DeleteFile(data) {
 
 						var sendData = {
 							"authorization_token" : token, 
 							"remote": true, 
-							"site": gadget.get('site'), 
+							"site": site, 
 							"path" : data.info.remote_path
 						}
 						
@@ -109,20 +90,16 @@ gadgetlib.js is a library of basic functions that gadgets can use. It creates a 
 							url: apihost + "/files/delete",
 							data: sendData,
 							type: "POST",
-							success: function(){
+							success: function() {
 							
 								$("#unpublish").addClass("hidden");
 								$("#prompt").addClass("hidden");
 								$("#response").removeClass("hidden");
 
 								currentPage = data.info.staging_path;
-
 							}
-
-						});
-						
-					}
-					
+						});						
+					}					
 				});
 
 				$(gadget).on({
@@ -136,7 +113,7 @@ gadgetlib.js is a library of basic functions that gadgets can use. It creates a 
 		            }
 		        });
 
-		        function resetGadget(path){
+		        function resetGadget(path) {
 
 					currentPage = path;
 
@@ -144,36 +121,7 @@ gadgetlib.js is a library of basic functions that gadgets can use. It creates a 
 					$("#prompt").addClass("hidden");
 					$("#response").addClass("hidden");
 				}
-
-
 			});
-
-			
-
 		</script>
-	</head>
-	<body>
-		<div id="main">
-
-			<a id="unpublish" role="button" class="btn btn-danger" style="width:100%">Unpublish</a>
-			<div id="prompt" class="hidden">
-				<p>Are you sure?</p>
-				<button type="button" id="cancel" class="btn btn-default btn-sm">Cancel</button>
-				<button type="button" id="confirm" class="btn btn-danger btn-sm">Yes, Unpublish</button>
-			</div>
-			<div id="response" class="hidden">
-				<div class="alert alert-success">
-				    <strong>Success!</strong> The file has been unpublished.
-				</div>
-			</div>
-		</div>
-		<!--
-The following hidden div is only needed if you'll be editing your gadget in
-OU Campus's source code editor. OU Campus automatically adds a DirectEdit link
-to HTML files that you edit in OU Campus. This div hides the DirectEdit link.
--->
-		<div style="display:none">
-			<!-- ouc:ob --><!-- /ouc:ob -->
-</div>
 	</body>
 </html>

@@ -21,18 +21,17 @@
 	
     <!-- This entry, if present, causes OU Campus to forward notifications of the specified 
          type(s) to the gadget. Enter one or more notification types separated by commas. -->
-    <entry key="notifications" private="true">message</entry>
+    <!--<entry key="notifications" private="true">message</entry>-->
     
     <!-- For sidebar gadgets only. See explanation at bottom. -->
     <!-- <entry key="sidebar_context" private="true">edit</entry> -->
     
     <!-- For dashboard gadgets only. Determines the width of the gadget in columns. 
          Can be 1, 2, or 3. -->
-    <entry key="columns" private="true">1</entry>
+    <!--<entry key="columns" private="true">1</entry>-->
     
     <!-- For sidebar gadgets only. Determines the initial height of the gadget in pixels. -->
     <entry key="initial_height" private="true">80</entry>
-    
 </config>
 
 
